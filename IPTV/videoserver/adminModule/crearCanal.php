@@ -34,15 +34,18 @@
 	} else {
 		//Creaciòn del archivo XML
 		echo 'Creando canal.. <br /><br />';
+		
 		$newChannel = $_POST[nameCh].".xml";
-		$newChannel = fopen("../channels/".$newChannel, 'w+') or die("Error, no se puede crear el archivo.");
-		fclose($newChannel);
-		if(chmod("../channels/".$newChannel,0775))
-			echo 'Permisos de archivo añadidos.';
-		else 
-			echo 'Error al dar permisos.';
-			
-		$channel = simplexml_load_file("../channels/".$newChannel);
+		//$newChannel = fopen("../channels/".$newChannel, 'w+') or die("Error, no se puede crear el archivo.");
+		
+		//chmod($newChannel, 777);
+		
+		//fclose($newChannel);
+		
+		exec("touch /var/www/IPTV/videoserver/channels/".$newChannel);
+		exec("chmod 777 /var/www/IPTV/videoserver/channels/".$newChannel);
+		
+		$channel = simplexml_load_file("/var/www/IPTV/videoserver/channels/".$newChannel);
 
 		$channel->addAtribute('canal', $newChannel);
 		echo 'Atributos XML creados.';
