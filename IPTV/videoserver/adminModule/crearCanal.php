@@ -41,7 +41,7 @@
 		//chmod($newChannel, 777);
 		
 		//fclose($newChannel);
-		
+		//que pasaaa!
 		exec("touch /var/www/IPTV/videoserver/channels/".$newChannel);
 		exec("chmod 777 /var/www/IPTV/videoserver/channels/".$newChannel);
 		
