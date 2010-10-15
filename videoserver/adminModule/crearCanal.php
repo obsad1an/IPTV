@@ -9,27 +9,84 @@
 
 <!-- Site navigation menu -->
     <ul class="navbar">
-      <li><a href="crearCanal.php">Crear canal</a>
-      <li><a href="musings.html">Agregar programas</a>
-      <li><a href="town.html">Usuarios registrados</a>
+      <li><a href="crearCanal.php">Canales</a>
+      <li><a href="musings.html">Programación</a>
+      <li><a href="town.html">Usuarios</a>
       <li><a href="links.html">Cambio de contraseña</a>
     </ul>
 
 <!-- Main content -->
-    <h1>Módulo administrador: creación de canal.</h1>
+<h1>Módulo administrador: creación de canal.</h1>
 
-    <p>Welcome to my styled page!
+<?php
+	if(!isset($_POST['submit'])){
+		echo '<form action="crearCanal.php" method="post">
+			<div class="col1">
+				Nombre del Canal:<br />
+				Descripción:<br />
+			</div>
+			<div class="col2">
+				<input type="text" name="nameCh" /><br />
+				<textarea name="descriptCh"> </textarea><br />
+				<input type="submit" name="submit" value="Crear Canal">
+			</div>
+		</form>';
+	} else {
+		//Creaciòn del archivo XML
+		echo 'Creando canal.. <br /><br />';
+    $nameChannel = $_POST['nameCh'];
+    $newChannel = $_POST['nameCh'].".xml";
 
-<p>It lacks images, but at least it has style.
-And it has links, even if they don't go
-anywhere&hellip;</p>
+    $descriptCh = $_POST['descriptCh'];
 
-<p>There should be more here, but I don't know
-what yet.</p>
+    //Datos del canal
+    $channels = array(); 
+    $channels [] = array( 
+    'name' => $nameChannel,  
+    'description' => $descriptCh
+    ); 
+     
+    //Creacion del documento XML
+    $doc = new DOMDocument(); 
+    $doc->formatOutput = true; 
+    
+    //Se crea el elemento raiz
+    $r = $doc->createElement( "channels" ); 
+    $doc->appendChild( $r ); 
+    
+    //ELEMENTO QUE INFORMA SOBRE EL CANAL
+    foreach( $channels as $channel ) 
+    { 
+      $b = $doc->createElement( "channel" ); 
+     
+      $name = $doc->createElement( "name" ); 
+      $name->appendChild( 
+      $doc->createTextNode( $channel['name'] ) 
+      ); 
+      $b->appendChild( $name ); 
+      
+      $description = $doc->createElement( "description" ); 
+      $description->appendChild( 
+      $doc->createTextNode( $channel['description'] ) 
+      ); 
+      $b->appendChild( $description ); 
+      
+      $r->appendChild( $b ); 
+    }
+    
+    //Se almacena el documento XML del nuevo canal.
+    echo $doc->saveXML(); 
+    $doc->save("/var/www/IPTV/videoserver/channels/".$newChannel); 
+  
+    echo 'Canal creado exitosamente.';
 
-<!-- Sign and date the page, it's only polite! -->
-<address>Made 5 April 2004<br>
-  by myself.</address>
+	}
+
+
+?>
+
+<br />
+
 
   </body>
 
