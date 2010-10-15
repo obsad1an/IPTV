@@ -1,0 +1,45 @@
+body {
+  padding-left: 11em;
+  font-family: Verdana;
+  color: black;
+  background-color: #FFFFFF; 
+}
+
+ul.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 2em;
+  left: 1em;
+  width: 9em 
+}
+
+h1 {
+  font-family: verdana;
+}
+
+ul.navbar li {
+  background: CCCCFF;
+  margin: 0.5em 0;
+  padding: 0.3em;
+  border-right: 1em solid black 
+}
+
+ul.navbar a {
+  text-decoration: none 
+}
+
+a:link {
+  color: blue 
+}
+
+a:visited {
+  color: purple 
+}
+
+address {
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: thin dotted 
+}
