@@ -41,8 +41,9 @@
     		</form>';
     	} else {
     		//Creaciòn del archivo XML
-    		echo 'Creando canal.. <br /><br />';
+    		echo '<p>Creando canal... </p>';
     		
+        //obteniendo las variables string
     		$strNewChannel = $_POST[nameCh];
         $strSigla = $_POST[sigla];
         $strNumeroCh = $_POST[numero];
@@ -50,21 +51,24 @@
         $strTipo = $_POST[tipo];
         $strDescripcion = $_POST[descriptCh];
     		
+        //creacion del objeto XML
         $xdoc = new DOMDocument('1.0', 'UTF-8');
+        //carga de la estructura XML
         $xdoc->load('/var/www/IPTV/iptvStructure.xml');
         
         if (!$xdoc) {
-          echo 'Error al cargar el archivo XML <br />';
+          echo '<p class="mensajeError">[Fallo]: Error al cargar el archivo XML. </p>';
         } else {
-          echo 'Archivo XML cargado con éxito <br />';
+          echo '<p class="mensajeExito">[Éxito]: Estructura cargado con éxito. </p>';
         }
          
-        echo '1';
+        //Generación del canal en la estructura
+        echo '<p class="mensajeInfoPasos">Creando estructura... </p>';
         $channel = $xdoc->getElementsByTagName('iptv')->item(0);
-        echo '2';
+
         $newChannel = $xdoc ->createElement('canal');
         $channel->appendChild($newChannel);
-        echo 'añadiendo atributos';
+        echo '<p class="mensajeInfoPasos">Añadiendo atributos... </p>';
         //Atributo nombre
         $chNameAttrib = $xdoc->createAttribute('nombre');
         $newChannel->appendChild($chNameAttrib);
@@ -106,61 +110,51 @@
         
         $txtNode = $xdoc->createTextNode($strDescripcion);
         $chDescripcionAttrib->appendchild($txtNode);
-        
-        echo '4';
-        //$newChannel -> appendChild($txtNode);
-        echo '5';
-        echo '6';
+      
+        $xdoc->save("/var/www/IPTV/iptvStructure.xml");
+        echo '<p class="mensajeExito">[Éxito]: El canal '.$strNewChannel.' ha sido creado. </p>';
 
         //Conexion a la nube
         if(!($con = ssh2_connect("172.17.8.229", 22))){
-            echo 'Error: al establecer conexión con la nube. <br />';
+            echo '<p class="mensajeError">[Error]: al establecer conexión con la nube. </p>';
         } else {
-            // autenticación con username root, password secretpassword
-            if(!ssh2_auth_password($con, "clouduser", "iptv2010")) {
-                echo "Error: no es posible autenticarse en el servidor \n";
-            } else {
-                // allright, we're in!
-                echo "Exito: Autenticado en el servidor...\n";
-                
-               
-                //$cmd = 'perl s3-curl/s3curl.pl --id $EC2_ACCESS_KEY --key $EC2_SECRET_KEY --put /dev/null -- -s -v $S3_URL/'.$strNewChannel;         
-                // create a shell
-                if (!($shell = ssh2_shell($con, 'vt102', null, 80, 40, SSH2_TERM_UNIT_CHARS))) {
-                    echo "fail: unable to establish shell\n";
-                } else {
-                    echo "1\n";
-                    stream_set_blocking($shell, true);
-                    // send a command
-                    fwrite($shell, "perl s3-curl/s3curl.pl --id \$EC2_ACCESS_KEY --key \$EC2_SECRET_KEY --put /dev/null -- -s -v \$S3_URL/".$strNewChannel."\n");
-                    sleep(1);
-         echo "2\n";
-                    // & collect returning data
-                    $data = "";
-                    while ($buf = fread($shell,4096)) {
-                        $data .= $buf;
-                    }
-                    fclose($shell);
-                }
-                   
-
+            
+          // autenticación con username root, password secretpassword
+          if(!ssh2_auth_password($con, "clouduser", "iptv2010")) {
+              echo '<p class="mensajeError">[Error]: No es posible autenticarse en el servidor </p>';
+          } else {
+            // allright, we're in!
+            echo '<p class="mensajeExito">[Exito]: Autenticado en el servidor...</p>';
+            
            
-         
-         /*
-                // execute a command
-                ssh2_exec($con, './s3curl.sh log');
-                    
-                echo 'Exito: el canal ha sido creado en la nube<br /><br />';
-                echo 'perl s3-curl/s3curl.pl --id $EC2_ACCESS_KEY --key $EC2_SECRET_KEY --put /dev/null -- -s -v $S3_URL/'.$strNewChannel.'<br /><br />';
-                    */
-                
+               
+            // create a shell
+            if (!($shell = ssh2_shell($con, 'vt102', null, 80, 40, SSH2_TERM_UNIT_CHARS))) {
+                echo '<p class="mensajeError">[Error]: No ha sido posible creal el shell. </p>';
+            } else {
+
+              stream_set_blocking($shell, true);
+              // send a command
+              fwrite($shell, "perl s3-curl/s3curl.pl --id \$EC2_ACCESS_KEY --key \$EC2_SECRET_KEY --put /dev/null -- -s -v \$S3_URL/".$strNewChannel."\n");
+              sleep(1);
+  
+              $time_start = time();
+              $data       = "";
+              while (true){
+                $data .= fread($stream, 4096);
+                if (strpos($data,"__COMMAND_FINISHED__") !== false) {
+                  echo '<p class="mensajeExito">[Éxito]: El canal ha sido creado en la nube.</p>';
+                  break;
+                }
+                if ((time()-$time_start) > 10 ) {
+                  echo '<p class="mensajeExito">[Éxito]: El canal ha sido creado en la nube.</p>';
+                  break;
+                }
+              }
             }
+          }
         }
 
-        
-      
-        $xdoc->save("/var/www/IPTV/iptvStructure.xml");
-    		echo 'Canal creado exitosamente.';
     	}
     
     

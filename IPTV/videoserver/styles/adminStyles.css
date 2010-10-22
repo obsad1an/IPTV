@@ -1,0 +1,80 @@
+br {
+  line-height:10px;
+}
+
+body {
+  padding-left: 11em;
+  font-family: Verdana;
+  color: black;
+  background-color: #FFFFFF; 
+}
+
+div.col1 {
+  vertical-align:top;
+  float: left;
+  width: 22%; 
+}
+
+div.col2 {
+  vertical-align:top;
+  float: left;
+  width: 30%;
+}
+
+ul.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 2em;
+  left: 1em;
+  width: 9em 
+}
+
+h1 {
+  font-family: verdana;
+}
+
+ul.navbar li {
+  background: CCCCFF;
+  margin: 0.5em 0;
+  padding: 0.3em;
+  border-right: 1em solid black 
+}
+
+ul.navbar a {
+  text-decoration: none 
+}
+
+a:link {
+  color: blue 
+}
+
+a:visited {
+  color: purple 
+}
+
+input {
+  width: 130px;
+  height: 20px;
+  border-width: 1px;
+  border-color: #CCCCCC;
+}
+
+p.mensajeError {
+  font-family: verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: red;
+}
+
+p.mensajeExito {
+  font-family: verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: blue;
+}
+
+p.mensajeInfoPasos {
+  font-family: verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: green;
+}
