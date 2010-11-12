@@ -1,0 +1,95 @@
+<iptv>
+
+  <canal nombre="" sigla="" numero="" region="" tipo="" descripcion="">
+   
+    <programacion_alacarta>
+      <programa>
+        <nombre_programa></nombre_programa>
+        <tipo_programa></tipo_programa>
+        <tipo_contenido_programa></tipo_contenido_programa>
+        <genero></genero>
+        <clasificacion></clasificacion>
+        <caracteristicas></caracteristicas>
+        <pais_origen></pais_origen>
+        <idiomas> 
+          <nombre_idioma subtitulos=""></nombre_idioma>
+        </idiomas>
+        <hora_emision pais=""></hora_emision>
+        <duracion></duracion>
+        <propaganda_asociada>
+          <duracion_propaganda></duracion_propaganda>
+        </propaganda_asociada>
+        <nombre_archivo></nombre_archivo>
+        <imagen></imagen>
+      </programa>
+    </programacion_alacarta>
+     
+        
+    <programacion_live>
+      <programa_live>
+        <nombre_programa></nombre_programa>
+        <tipo_programa></tipo_programa>
+        <tipo_contenido_programa></tipo_contenido_programa>
+        <genero></genero>
+        <clasificacion></clasificacion>
+        <caracteristicas></caracteristicas>
+        <pais_origen></pais_origen>
+        <idiomas> 
+          <nombre_idioma subtitulos=""> </nombre_idioma>
+        </idiomas>
+        <fecha_emision></fecha_emision>
+        <hora_emision></hora_emision>
+        <duracion></duracion>
+        <propaganda_asociada>
+          <duracion_propaganda></duracion_propaganda>
+        </propaganda_asociada>
+        <nombre_archivo></nombre_archivo>
+      </programa_live>
+    </programacion_live>
+    
+    <servicios_interactivos> 
+      <tipo_servicio>
+      <usuario id=""></usuario>
+      <nombre_servicio></nombre_servicio>
+      <tema_preguntas>
+      <pregunta>
+        <respuestas>
+          <opcion1></opcion1>
+          <opcion2></opcion2>
+          <opcion3></opcion3>
+          <respuesta_correcta></respuesta_correcta>
+        </respuestas>
+      </pregunta>
+      <ayuda_categoria></ayuda_categoria>
+      </tema_preguntas>
+       
+      <nombre_servicio></nombre_servicio>
+      <tema_encuesta>
+        <pregunta>
+          <respuestas>
+            <opcion1></opcion1>
+            <opcion2></opcion2>
+            <opcion3></opcion3>
+            <opcion4></opcion4>
+          </respuestas>
+        </pregunta>
+      <ayuda_categoria></ayuda_categoria>
+      </tema_encuesta>
+        
+      <nombre_servicio></nombre_servicio> 
+      <nombre_producto></nombre_producto>
+      <descripcion_producto></descripcion_producto>
+      <color_disponible_producto></color_disponible_producto>
+      <precio_producto></precio_producto>
+      <pais_origen_producto></pais_origen_producto>
+      <forma_pago>
+        <tarjeta_credito></tarjeta_credito>
+      </forma_pago>
+      
+      </tipo_servicio>
+    </servicios_interactivos>
+  
+  </canal>
+
+
+</iptv>
